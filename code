@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+#define MAX 100
+
+int size,tree[MAX]={0},k=0,n=1,t,order;
+
+
+int traverse(int node)
+{
+    if((node<=size)&&(tree[node]!=0))
+    {
+                if(order==1)
+                    printf("%d\t",tree[node]);         
+
+        traverse(2*node);          
+
+                if(order==2)
+                    printf("%d\t",tree[node]);          
+
+       traverse(2*node+1);          
+
+                if(order==3)
+                    printf("%d\t",tree[node]);          
+}
+
+
+
+void Input_tree()
+{
+    int i,choice;
+    char d=32;      //ASCII code of space
+
+        printf("How do you input tree?\n 1.sequence of number\n2.One by one \n input your choice  ");
+        scanf("%d",&choice);
+        if(choice==1){
+            for(i=1;d==32;i++){
+                scanf("%d%c",&tree[i],&d);
+            }
+            size=i-1;           //length of array tree
+        }
+        else{
+            printf("Input a tree.\nTo close input -1.\nInput 0 if you don't want to insert any value\n");
+
+            printf("Input root : ");
+            scanf("%d",&tree[1]);
+                for(i=1;tree[i++]!=-1; )
+                {
+                    if(tree[i/2]!=0){
+
+                    if(i%2==0)
+                        printf("Input left child of %d node: ",tree[i/2]);
+                    else
+                        printf("Input right child of %d node: ",tree[i/2]);
+
+                        scanf("%d",&tree[i]);
+                    }
+                    if(i>=MAX){
+                        printf("Stack overflow");
+                        exit(0);
+                    }
+
+                }
+
+            size=i-2;       //length of array tree
+        }
+
+}
+
+int main()
+{
+    int i,number=0;
+
+
+
+        Input_tree();
+
+
+
+        printf("generate a tree : \n");
+                for(i=1;i<=size;i++)
+                    if(tree[i]==0)
+                        printf("- ");
+                    else
+                        printf("%d ",tree[i]);
+
+
+        order=1;
+    printf("\nPreorder traversal: ");
+        traverse(1);
+
+        order=2;
+    printf("\nInorder travarsal: ");
+        traverse(1);
+
+        order=3;
+    printf("\nPostorder traversal: ");
+        traverse(1);
+
+}
